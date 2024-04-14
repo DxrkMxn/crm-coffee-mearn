@@ -1,0 +1,38 @@
+<main class="content">
+      <div class="page-title">
+            <h4>Esquemas</h4>
+            <button
+                  class="waves-effect waves-light btn grey darken-1"
+                  [routerLink]="routerPathsEnum.NEW"
+                  >Agregar esquema</button
+            >
+      </div>
+
+      <div class="row">
+            <div class="col s12">
+                  <ng-container
+                        *ngIf="emailSchemasList$ | async as emailSchemas; else loading"
+                  >
+                        <ng-container *ngIf="emailSchemas.length; else empty">
+                              <div class="collection">
+                                    <a
+                                          *ngFor="let emailSchema of emailSchemas; trackBy: trackById"
+                                          [routerLink]="[emailSchema._id]"
+                                          class="collection-item"
+                                          >{{ emailSchema.name }}</a
+                                    >
+                              </div>
+                        </ng-container>
+                        <ng-template #empty>
+                              <span class="valign-wrapper">
+                                    No tienes esquemas de correo.
+                                    <i class="material-icons">email</i>
+                              </span>
+                        </ng-template>
+                  </ng-container>
+                  <ng-template #loading>
+                        <crm-loader></crm-loader>
+                  </ng-template>
+            </div>
+      </div>
+</main>

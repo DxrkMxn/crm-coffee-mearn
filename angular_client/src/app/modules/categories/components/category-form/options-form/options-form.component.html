@@ -1,0 +1,134 @@
+<div class="row">
+      <div class="col s12">
+            <div class="page-subtitle">
+                  <h4>Opciones:</h4>
+                  <button
+                        #addOption
+                        [disabled]="!(options$ | async)"
+                        class="waves-effect waves-light btn grey darken-1 btn-small">
+                        Agregar opción
+                  </button>
+            </div>
+            <ng-container *ngIf="!!(options$ | async); else loader">
+                  <ng-container
+                        *ngIf="(options$ | async)?.length; else noOptions">
+                        <div class="collection">
+                              <a
+                                    (click)="selectOption(option)"
+                                    class="collection-item collection-item-icon"
+                                    *ngFor="
+                                          let option of options$ | async;
+                                          trackBy: trackById
+                                    ">
+                                    <span>
+                                          {{ option.name }}
+                                          <strong>{{ option.cost }} $</strong>
+                                    </span>
+                                    <span
+                                          (click)="
+                                                removeOption(
+                                                      option._id || '',
+                                                      $event
+                                                )
+                                          ">
+                                          <i class="material-icons">delete</i>
+                                    </span>
+                              </a>
+                        </div>
+                  </ng-container>
+                  <ng-template #noOptions>
+                        <span class="valign-wrapper">
+                              <i class="material-icons">move_to_inbox</i>
+                              No hay opciones en la categoría.
+                        </span>
+                  </ng-template>
+            </ng-container>
+      </div>
+</div>
+
+<ng-template #loader>
+      <crm-loader></crm-loader>
+</ng-template>
+
+<form
+      [formGroup]="addOptionForm"
+      (ngSubmit)="submitOption()"
+      #modal
+      class="modal">
+      <div class="modal-content">
+            <h4 class="mb1">Agregar opción</h4>
+            <div class="input-field">
+                  <input
+                        id="pos-name"
+                        type="text"
+                        [formControlName]="'name'"
+                        [ngClass]="{
+                              invalid:
+                                    addOptionForm.get('name')?.invalid &&
+                                    addOptionForm.get('name')?.touched
+                        }" />
+                  <label for="pos-name">Nombre</label>
+                  <span
+                        class="helper-text red-text"
+                        *ngIf="
+                              addOptionForm.get('name')?.invalid &&
+                              addOptionForm.get('name')?.touched
+                        "
+                        >Campo requerido.</span
+                  >
+            </div>
+            <div class="input-field">
+                  <input
+                        id="pos-cost"
+                        type="number"
+                        min="0"
+                        [formControlName]="'cost'"
+                        [ngClass]="{
+                              invalid:
+                                    addOptionForm.get('cost')?.invalid &&
+                                    addOptionForm.get('cost')?.touched
+                        }" />
+                  <label for="pos-cost">Precio</label>
+                  <span
+                        class="helper-text red-text"
+                        *ngIf="
+                              addOptionForm.get('cost')?.invalid &&
+                              addOptionForm.get('cost')?.touched
+                        "
+                        ><span
+                              *ngIf="
+                                    (addOptionForm.get('cost')?.errors)![
+                                          'required'
+                                    ]
+                              "
+                              >Campo requerido.</span
+                        >
+                        <span
+                              *ngIf="
+                                    (addOptionForm.get('cost')?.errors)![
+                                          'min'
+                                    ]
+                              "
+                              >Debe ser un valor positivo.</span
+                        >
+                  </span>
+            </div>
+      </div>
+      <div class="modal-footer">
+            <button
+                  type="button"
+                  (click)="hideModal()"
+                  class="modal-action waves-effect waves-black btn-flat"
+                  [disabled]="addOptionForm.disabled"
+                  >Cancelar</button
+            >
+            <button
+                  type="submit"
+                  class="modal-action btn waves-effect"
+                  [disabled]="
+                        addOptionForm.invalid || addOptionForm.disabled
+                  "
+                  >Guardar</button
+            >
+      </div>
+</form>

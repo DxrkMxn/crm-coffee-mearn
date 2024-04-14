@@ -1,0 +1,7 @@
+.error-input {
+    box-shadow: none !important;
+    border-color: red !important;
+}
+.error-text {
+    color: red !important;
+}

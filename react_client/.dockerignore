@@ -1,0 +1,12 @@
+node_modules
+dist
+e2e
+.tmp
+.idea
+.vscode
+*.log
+*.pid
+*.yml
+*.yaml
+Dockerfile
+.dockerignore

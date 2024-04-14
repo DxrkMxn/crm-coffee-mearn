@@ -1,0 +1,45 @@
+<table class="highlight">
+      <ng-container *ngIf="options$ | async as options; else loading">
+            <thead>
+                  <tr>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th></th>
+                  </tr>
+            </thead>
+            <tbody>
+                  <ng-container *ngIf="options.length; else empty">
+                        <tr *ngFor="let option of options">
+                              <td>{{ option.name }}</td>
+                              <td>{{ option.cost }} $</td>
+                              <td>
+                                    <div
+                                          class="input-field inline order-option-input">
+                                          <input
+                                                [(ngModel)]="option.quantity"
+                                                type="number"
+                                                min="0" />
+                                    </div>
+                              </td>
+                              <td>
+                                    <button
+                                          class="btn waves-effect wavers-light btn-small"
+                                          [disabled]="!option.quantity"
+                                          (click)="addToOrder(option)"
+                                          >Agregar</button
+                                    >
+                              </td>
+                        </tr>
+                  </ng-container>
+                  <ng-template #empty>
+                        <span class="valign-wrapper">
+                              <i class="material-icons">do_not_disturb_alt</i>No hay opciones
+                        </span>
+                  </ng-template>
+            </tbody>
+      </ng-container>
+      <ng-template #loading>
+            <crm-loader></crm-loader>
+      </ng-template>
+</table>

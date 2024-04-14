@@ -1,0 +1,9 @@
+<main class="content">
+      <div class="page-title">
+            <h4>
+                  Perfil
+            </h4>
+      </div>
+      <crm-auth-form #form [title]="'Actualizar datos personales'" [buttonTitle]="'Actualizar'" [isRegistering]="true"
+            [isUpdating]="true" (emitAuthForm)="updateProfile($event)"></crm-auth-form>
+</main>

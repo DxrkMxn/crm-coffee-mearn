@@ -1,0 +1,14 @@
+{
+  "/crm/*": {
+    "target": "https://crm-backend-atjh.onrender.com",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/uploads/*": {
+    "target": "https://crm-backend-atjh.onrender.com",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

@@ -1,0 +1,80 @@
+<main class="content">
+      <div class="page-title">
+            <h4>
+                  <a [routerLink]="['/',routerPathsEnum.MAILING]">Esquemas</a>
+                  <i class="material-icons">keyboard_arrow_right</i>
+                  {{isNew?'Agregar':'Actualizar'}} Esquema
+            </h4>
+            <span>
+                  <button #delButton class="btn btn-small red" [disabled]="isNew">
+                        <i class="material-icons">delete</i>
+                  </button>
+            </span>
+      </div>
+
+      <div class="row">
+            <form [formGroup]="emailSchemaForm" (ngSubmit)="submitForm()" class="col s12 l6">
+                  <div class="input-field">
+                        <input id="name" type="text" [formControlName]="'name'"
+                              [ngClass]="{'invalid':emailSchemaForm.get('name')?.invalid && emailSchemaForm.get('name')?.touched}" />
+                        <label for="name">Nombre</label>
+                        <span class="helper-text red-text"
+                              *ngIf="emailSchemaForm.get('name')?.invalid && emailSchemaForm.get('name')?.touched">
+                              <span *ngIf="emailSchemaForm.get('name')?.errors!['required']">Campo requerido.</span>
+                              <span *ngIf="emailSchemaForm.get('name')?.errors!['minlength']">Nombre muy corto.</span>
+                        </span>
+                  </div>
+
+                  <div class="input-field">
+                        <input id="subject" type="text" formControlName="subject"
+                              [ngClass]="{ 'invalid': emailSchemaForm.get('subject')?.invalid && emailSchemaForm.get('subject')?.touched }" />
+                        <label for="subject">Asunto</label>
+                        <span class="helper-text red-text"
+                              *ngIf="emailSchemaForm.get('subject')?.invalid && emailSchemaForm.get('subject')?.touched">
+                              <span *ngIf="emailSchemaForm.get('subject')?.errors!['required']">Campo requerido.</span>
+                              <span *ngIf="emailSchemaForm.get('subject')?.errors!['minlength']">Asunto muy
+                                    corto.</span>
+                        </span>
+                  </div>
+
+                  <div>
+                        <label>
+                              Fecha en que se enviará:
+                        </label>
+                        <span>
+                              <input id="sendDate" type="date" formControlName="sendDate" [value]="emailSchemaForm.get('sendDate')?.value">
+                        </span>
+                        <span class="helper-text red-text"
+                              *ngIf="emailSchemaForm.get('sendDate')?.invalid && emailSchemaForm.get('sendDate')?.touched">
+                              <span *ngIf="emailSchemaForm.get('sendDate')?.errors!['required']">
+                                    Campo requerido.
+                              </span>
+                        </span>
+                  </div>
+
+                  <div>
+                        <input type="file" class="dn" #fileInput (change)="onFileUpload($event)" />
+                        <button type="button" class="waves-effect waves-light btn orange lighten-2 mb2"
+                              (click)="showFileInput()">
+                              <i class="material-icons left">backup</i>
+                              Cargar esquema HTML
+                        </button>
+                        <button type="button" [disabled]="!isFileSelected"
+                              class="waves-effect waves-light btn blue lighten-2 mb2" (click)="downloadFileInput()">
+                              <i class="material-icons left">download</i>
+                              Descargar esquema HTML
+                        </button>
+                  </div>
+
+                  <div>
+                        <button type="submit" class="waves-effect waves-light btn" [disabled]="emailSchemaForm.invalid || emailSchemaForm.disabled">
+                              Guardar cambios
+                        </button>
+                  </div>
+            </form>
+
+            <div class="col s12 l4 center">
+            </div>
+      </div>
+
+</main>

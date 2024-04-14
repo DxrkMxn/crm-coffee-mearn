@@ -1,0 +1,33 @@
+<ng-container *ngIf="categories$ | async as categories; else loading">
+      <div class="frow order-row">
+            <ng-container *ngIf="categories.length; else empty">
+                  <div
+                        class="card waves-effect pointer"
+                        *ngFor="
+                              let category of categories;
+                              trackBy: trackByIndex
+                        "
+                        [routerLink]="[
+                              '/',
+                              routerPathsEnum.ORDER,
+                              category._id
+                        ]">
+                        <div class="center">
+                              <img
+                                    [src]="category.image"
+                                    class="responsive-img order-img"
+                                    [alt]="'imageSrc'" />
+                        </div>
+                        <div class="card-content center p10">
+                              <h5 class="m0">{{ category.name }}</h5>
+                        </div>
+                  </div>
+            </ng-container>
+            <ng-template #empty>
+                  <span class="center">No tienes ninguna Categoría.</span>
+            </ng-template>
+      </div>
+</ng-container>
+<ng-template #loading>
+      <crm-loader></crm-loader>
+</ng-template>

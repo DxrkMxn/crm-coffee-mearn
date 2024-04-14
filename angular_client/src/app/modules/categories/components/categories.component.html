@@ -1,0 +1,43 @@
+<main class="content">
+      <div class="page-title">
+            <h4>Categorías</h4>
+            <button
+                  class="waves-effect waves-light btn grey darken-1"
+                  [routerLink]="routerPathsEnum.NEW"
+                  >Agregar categoría</button
+            >
+      </div>
+
+      <div class="row">
+            <div class="col s12">
+                  <ng-container
+                        *ngIf="
+                              categoriesList$ | async as categories;
+                              else loading
+                        ">
+                        <ng-container *ngIf="categories.length; else empty">
+                              <div class="collection">
+                                    <a
+                                          *ngFor="
+                                                let category of categories;
+                                                trackBy: trackById
+                                          "
+                                          [routerLink]="[category._id]"
+                                          class="collection-item"
+                                          >{{ category.name }}</a
+                                    >
+                              </div>
+                        </ng-container>
+                        <ng-template #empty>
+                              <span class="valign-wrapper">
+                                    No tienes categorías.
+                                    <i class="material-icons">shopping_cart</i>
+                              </span>
+                        </ng-template>
+                  </ng-container>
+                  <ng-template #loading>
+                        <crm-loader></crm-loader>
+                  </ng-template>
+            </div>
+      </div>
+</main>

@@ -1,0 +1,32 @@
+<main class="content">
+      <div class="page-title">
+            <h4>Análisis</h4>
+      </div>
+      <div [style.display]="pending ? 'none' : 'block'">
+            <div class="average-price">
+                  <p>Promedio de completos <strong>{{ average || 0 }} $</strong></p>
+            </div>
+
+            <div class="analytics-block pb3">
+                  <h5>Ingresos</h5>
+                  <canvas #gain></canvas>
+            </div>
+
+            <div class="analytics-block pb3">
+                  <h5>Pedidos</h5>
+                  <canvas #order></canvas>
+            </div>
+
+            <div class="analytics-block pb3">
+                  <h5>Promedio de Ingresos</h5>
+                  <canvas #avgGain></canvas>
+            </div>
+
+            <div class="analytics-block pb3">
+                  <h5>Promedio de Pedidos</h5>
+                  <canvas #avgOrder></canvas>
+            </div>
+
+      </div>
+      <crm-loader *ngIf="pending"></crm-loader>
+</main>

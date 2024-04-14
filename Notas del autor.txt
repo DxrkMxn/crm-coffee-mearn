@@ -1,0 +1,2 @@
+Ha sido una gran labor la edición y migración del frontend de la aplicación, esto fue realizado gracias a Jhusef Alfonso López Parra.
+En el backend se tomaron bases de Mongo con Node.js implementado por Jhusef Alfonso López Parra, editado para su uso con Mongo Atlas por Daniel Alejandro Romero Gaitán

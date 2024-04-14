@@ -1,0 +1,10 @@
+{
+    "/api": {
+        "target": "https://crm-backend-atjh.onrender.com",
+        "changeOrigin": true
+    },
+    "/cms-api": {
+        "target": "https://crm-backend-atjh.onrender.com",
+        "changeOrigin": true
+    }
+}

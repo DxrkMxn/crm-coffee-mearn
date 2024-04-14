@@ -1,0 +1,8 @@
+{
+  "/api/*": {
+    "target": "https://obscure-wildwood-16920.herokuapp.com",
+    "secure": true,
+    "loglevel": "debug",
+    "changeOrigin": true
+  }
+}

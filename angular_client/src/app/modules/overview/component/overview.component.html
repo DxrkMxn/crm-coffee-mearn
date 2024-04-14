@@ -1,0 +1,73 @@
+<main class="content">
+      <div class="page-title">
+            <h4>
+                  Resumen de ayer ({{ yesterday | date : "dd.MM.yyyy" }})
+                  <i class="material-icons black-text pointer" (click)="openTabTarget()">info_outline</i>
+            </h4>
+      </div>
+      <ng-container *ngIf="overview$ | async as overview; else loading">
+            <div class="row">
+                  <div class="col s12 l6">
+                        <div class="card light-blue lighten-2 white-text">
+                              <div class="card-content">
+                                    <span class="card-title">Ganancias:</span>
+                                    <h3>{{ overview.gain.yesterday }}$</h3>
+                                    <h3 class="m0 mb1" [ngClass]="{
+                                                'red-text':
+                                                      !overview.gain.isHigher,
+                                                'green-text text-darken-2':
+                                                      overview.gain.isHigher
+                                          }">
+                                          <i class="material-icons">{{
+                                                overview.gain.isHigher
+                                                ? "arrow_upward"
+                                                : "arrow_downward"
+                                                }}</i>
+                                          {{ overview.gain.percent || 100 }}%
+                                    </h3>
+                                    <p>Tus ingresos comerciales de ayer fueron
+                                          {{ overview.gain.percent || 100 }}%
+                                          {{
+                                          overview.gain.isHigher
+                                          ? "mayores"
+                                          : "menores"
+                                          }}
+                                          con promedio:
+                                          {{ overview.gain.compare || 0 }} $.
+                                          Por día.</p>
+                              </div>
+                        </div>
+                  </div>
+
+                  <div class="col s12 l6">
+                        <div class="card orange lighten-2 white-text">
+                              <div class="card-content">
+                                    <span class="card-title">Pedidos:</span>
+                                    <h3>{{ overview.orders.yesterday }} artículos</h3>
+                                    <h3 class="m0 mb1" [ngClass]="{
+                                    'red-text': !overview.orders.isHigher,
+                                    'green-text text-darken-2': overview.orders.isHigher }">
+                                          <i class="material-icons">{{ overview.orders.isHigher ? "arrow_upward" :
+                                                "arrow_downward" }}</i>
+                                          {{ overview.orders.percent }}%
+                                    </h3>
+                                    <p>El número de pedidos de ayer fue {{ overview.orders.percent }}%
+                                          {{ overview.orders.isHigher ? "mayor" : "menor" }} con valor promedio:
+                                          {{ overview.orders.compare }} pedido. Diario</p>
+                              </div>
+                        </div>
+                  </div>
+            </div>
+      </ng-container>
+      <ng-template #loading>
+            <crm-loader></crm-loader>
+      </ng-template>
+</main>
+
+<div #tapTarget class="tap-target" data-target="menu">
+      <div class="tap-target-content">
+            <h5>¿Por qué se necesita esta página?</h5>
+            <p>La página de "Resumen" mostrará la dinámica de las ventas del día anterior. La comparación con los
+                  promedios te ayuda a entender cómo está funcionando tu negocio.</p>
+      </div>
+</div>

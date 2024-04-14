@@ -1,0 +1,34 @@
+<main class="content">
+      <div class="page-title">
+            <h4>Historial de Pedidos</h4>
+            <button (click)="reloadContent()" class="btn btn-small" [disabled]="reloadingFlag" data-tooltip="Recargar">
+                  <i class="material-icons">refresh</i>
+            </button>
+      </div>
+
+
+      <div class="card">
+            <div class="card-content">
+                  <ng-container *ngIf="!reloadingFlag; else reloading">
+                        <ng-container *ngIf="historyList.length; else empty">
+                              <crm-history-list [historyList]="historyList" (orderFinished)="onOrderFinished()"
+                                    (fetch)="fetch()"></crm-history-list>
+                        </ng-container>
+                        <ng-template #empty>
+                              <div class="center">No hay pedidos</div>
+                        </ng-template>
+                        <div class="center mb2" *ngIf="!noMoreFlag">
+                              <button [disabled]="noMoreFlag" *ngIf="!loadingFlag; else loading"
+                                    class="btn waves-effect grey darken-1 btn-small" (click)="loadMore()">Cargar
+                                    más</button>
+                              <ng-template #loading>
+                                    <crm-loader></crm-loader>
+                              </ng-template>
+                        </div>
+                  </ng-container>
+            </div>
+      </div>
+      <ng-template #reloading>
+            <crm-loader></crm-loader>
+      </ng-template>
+</main>

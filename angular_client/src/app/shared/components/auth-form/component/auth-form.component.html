@@ -1,0 +1,156 @@
+<form class="card" [formGroup]="authForm" (ngSubmit)="submitForm()">
+      <div class="card-content">
+            <span class="card-title">
+                  {{ titleProps }}
+            </span>
+            <div class="input-field" *ngIf="isRegistering">
+                  <input
+                        id="name"
+                        type="text"
+                        [formControlName]="'name'"
+                        [ngClass]="{
+                              invalid:
+                                    authForm.get('name')?.invalid &&
+                                    authForm.get('name')?.touched
+                        }"/>
+                  <label
+                        [ngClass]="{
+                              'red-text': authForm.get('name')?.invalid && authForm.get('name')?.touched
+                        }"
+                        for="name">
+                              {{isUpdating ? 'Actualizar Nombre:' : 'Nombre:'}}
+                  </label>
+                  <span
+                        class="helper-text red-text" *ngIf="
+                              authForm.get('name')?.invalid &&
+                              authForm.get('name')?.touched
+                        ">
+                              <span *ngIf="(authForm.get('name')?.errors)!['required']">
+                                    El nombre es requerido
+                              </span>
+                  </span>
+            </div>
+            <div class="input-field" *ngIf="isRegistering">
+                  <input
+                        id="surname"
+                        type="text"
+                        [formControlName]="'surname'"
+                        [ngClass]="{
+                              invalid:
+                                    authForm.get('surname')?.invalid &&
+                                    authForm.get('surname')?.touched
+                        }"/>
+                  <label
+                        [ngClass]="{'red-text': authForm.get('surname')?.invalid && authForm.get('surname')?.touched}"
+                        for="surname">
+                              {{isUpdating ? 'Actualizar Apellido:' : 'Apellido:'}}
+                  </label>
+                  <span 
+                        class="helper-text red-text"
+                        *ngIf="
+                              authForm.get('surname')?.invalid && authForm.get('surname')?.touched
+                        "
+                  >
+                        <span *ngIf="(authForm.get('surname')?.errors)!['required']">
+                              El apellido es requerido
+                        </span>
+                  </span>
+            </div>
+            <div class="input-field" *ngIf="isRegistering">
+                  <input
+                        id="phone"
+                        type="tel"
+                        [formControlName]="'phone'"
+                        maxlength="10"
+                        [ngClass]="{
+                              invalid:
+                                    authForm.get('phone')?.invalid &&
+                                    authForm.get('phone')?.touched
+                        }"/>
+                  <label
+                        [ngClass]="{'red-text': authForm.get('phone')?.invalid && authForm.get('phone')?.touched}"
+                        for="phone">
+                              {{isUpdating ? 'Actualizar Teléfono:' : 'Teléfono:'}}
+                  </label>
+                  <span
+                        class="helper-text red-text"
+                        *ngIf="
+                              authForm.get('phone')?.invalid &&
+                              authForm.get('phone')?.touched
+                        "
+                  >
+                        <span *ngIf="(authForm.get('phone')?.errors)!['required']">
+                              Teléfono es requerido
+                        </span>
+                        <span *ngIf="(authForm.get('phone')?.errors)!['pattern']">
+                              El formato del teléfono es incorrecto
+                        </span>
+                  </span>
+            </div>
+            <div class="input-field" *ngIf="!isUpdating">
+                  <input
+                        id="email"
+                        type="email"
+                        [formControlName]="'email'"
+                        [ngClass]="{
+                              invalid:
+                                    authForm.get('email')?.invalid &&
+                                    authForm.get('email')?.touched
+                        }"/>
+                  <label
+                        [ngClass]="{'red-text': authForm.get('email')?.invalid && authForm.get('email')?.touched}"
+                        for="email">Email:</label>
+                  <span 
+                        class="helper-text red-text"
+                        *ngIf="
+                              authForm.get('email')?.invalid &&
+                              authForm.get('email')?.touched
+                        "
+                  >
+                        <span *ngIf="(authForm.get('email')?.errors)!['required']">
+                              El email es requerido
+                        </span>
+                        <span *ngIf="(authForm.get('email')?.errors)!['pattern']">
+                              El formato del email es incorrecto
+                        </span>
+                  </span>
+            </div>
+            <div class="input-field" *ngIf="!isUpdating">
+                  <input
+                        id="password"
+                        type="password"
+                        [formControlName]="'password'"
+                        [ngClass]="{
+                              invalid:
+                                    authForm.get('password')?.invalid &&
+                                    authForm.get('password')?.touched
+                        }"
+                  />
+                  <label
+                        [ngClass]="{'red-text': authForm.get('password')?.invalid && authForm.get('password')?.touched}"
+                        for="password"
+                  >
+                        Contraseña:
+                  </label>
+                  <span
+                        class="helper-text red-text"
+                        *ngIf="authForm.get('password')?.invalid && authForm.get('password')?.touched"
+                  >
+                        <span *ngIf="(authForm.get('password')?.errors)!['pattern']">
+                              El formato de la contraseña es incorrecto
+                        </span>
+                        <span *ngIf="(authForm.get('password')?.errors)!['required']">
+                              La contraseña es requerida
+                        </span>
+                  </span>
+            </div>
+      </div>
+      <div class="card-action">
+            <button
+            class="modal-action btn waves-effect"
+            type="submit"
+            [disabled]="!authForm.valid || authForm.disabled">
+                  {{ buttonTitleProps }}
+            </button>
+      </div>
+</form>

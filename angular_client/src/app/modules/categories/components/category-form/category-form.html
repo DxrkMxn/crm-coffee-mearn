@@ -1,0 +1,90 @@
+<main class="content">
+      <div class="page-title">
+            <h4>
+                  <a [routerLink]="['/',routerPathsEnum.CATEGORIES]"
+                        >Categorías</a
+                  >
+                  <i class="material-icons">keyboard_arrow_right</i>
+                  {{isNew?'Agregar':'Actualizar'}} categoría
+            </h4>
+            <span>
+                  <button
+                        #delButton
+                        class="btn btn-small red"
+                        [disabled]="isNew">
+                        <i class="material-icons">delete</i>
+                  </button>
+            </span>
+      </div>
+
+      <div class="row">
+            <form
+                  [formGroup]="categoryForm"
+                  (ngSubmit)="submitForm()"
+                  class="col s12 l6">
+                  <div class="input-field">
+                        <input
+                              id="name"
+                              type="text"
+                              [formControlName]="'name'"
+                              [ngClass]="{'invalid':categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched}" />
+                        <label for="name">Nombre</label>
+                        <span
+                              class="helper-text red-text"
+                              *ngIf="categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched">
+                              <span
+                                    *ngIf="categoryForm.get('name')?.errors!['required']"
+                                    >Campo requerido.</span
+                              >
+                              <span
+                                    *ngIf="categoryForm.get('name')?.errors!['minlength']"
+                                    >Nombre muy corto.</span
+                              >
+                        </span>
+                  </div>
+
+                  <div>
+                        <input
+                              type="file"
+                              class="dn"
+                              #fileInput
+                              (change)="onFileUpload($event)" />
+                        <button
+                              type="button"
+                              [disabled]="categoryForm.invalid ||categoryForm.disabled"
+                              class="waves-effect waves-light btn orange lighten-2 mb2"
+                              (click)="showFileInput()">
+                              <i class="material-icons left">backup</i>
+                              Cargar imágen
+                        </button>
+                  </div>
+
+                  <div>
+                        <button
+                              type="submit"
+                              class="waves-effect waves-light btn"
+                              [disabled]="categoryForm.invalid">
+                              Guardar cambios
+                        </button>
+                  </div>
+            </form>
+
+            <div class="col s12 l4 center">
+                  <ng-container *ngIf="imagePreview; else noImage">
+                        <img
+                              class="responsive-img h200"
+                              [src]="imagePreview"
+                              alt="image" />
+                  </ng-container>
+                  <ng-template #noImage>
+                        <i class="large material-icons"
+                              >{{isNew?'add_a_photo':'broken_image'}}</i
+                        >
+                  </ng-template>
+            </div>
+      </div>
+
+      <ng-container *ngIf="!isNew">
+            <crm-options-form [categoryId]="categoryId"></crm-options-form>
+      </ng-container>
+</main>

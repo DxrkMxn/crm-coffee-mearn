@@ -1,0 +1,70 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "description": "This is a simple API documentation for the CRM Coffee MEARN application.",
+      "version": "1.0.0",
+      "title": "CRM Coffee MEARN API",
+      "termsOfService": "http://swagger.io/terms/",
+      "contact": {
+        "email": "contact@example.com"
+      },
+      "license": {
+        "name": "Apache 2.0",
+        "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      }
+    },
+    "basePath": "/api/v1",
+    "tags": [
+      {
+        "name": "auth",
+        "description": "Authentication operations"
+      }
+    ],
+    "schemes": ["http", "https"],
+    "paths": {
+      "/auth/login": {
+        "post": {
+          "tags": ["auth"],
+          "summary": "Logs in a user",
+          "description": "",
+          "operationId": "loginUser",
+          "consumes": ["application/json"],
+          "produces": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "body",
+              "description": "User object that needs to be logged in",
+              "required": true,
+              "schema": {
+                "$ref": "#/definitions/Login"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User logged in successfully"
+            },
+            "400": {
+              "description": "Invalid username/password supplied"
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "Login": {
+        "type": "object",
+        "required": ["username", "password"],
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+  

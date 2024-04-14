@@ -1,0 +1,25 @@
+<ul class="sidenav sidenav-fixed a-sidenav">
+      <h4>CRM MEAN</h4>
+      <li class="bold" *ngFor="let item of linksList; trackBy: trackByName" [routerLink]="item.path"
+            [routerLinkActive]="'active'" [routerLinkActiveOptions]="{ exact: true }">
+            <a class="waves-effect waves-angular" [ngStyle]="{'display': item.display ? 'block' : 'none'}">
+                  {{ item.title }}
+            </a>
+      </li>
+      <li class="bold last"><a [routerLink]="routerPathsEnum.LOGIN" (click)="logout()"
+                  class="waves-effect waves-angular">Cerrar Sesión</a></li>
+</ul>
+<router-outlet></router-outlet>
+
+<div class="fixed-action-btn" #floatingB>
+      <a class="btn-floating btn-large" style="background-color: #919d9c;">
+            <i class="large material-icons">coffee</i>
+      </a>
+      <ul>
+            <li><a class="btn-floating green" [routerLink]="routerPathsEnum.ORDER"><i
+                              class="material-icons">assignment</i></a></li>
+            <li><a class="btn-floating blue" [routerLink]="[
+                              routerPathsEnum.HISTORY
+                        ]"><i class="material-icons">list</i></a></li>
+      </ul>
+</div>

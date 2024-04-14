@@ -1,0 +1,80 @@
+<main class="content">
+      <div class="page-title">
+            <h4 *ngIf="isRoot">Pedido</h4>
+            <h4 *ngIf="!isRoot">
+                  <a [routerLink]="['/', routesPaths.ORDER]">Pedido</a>
+                  <i class="material-icons">keyboard_arrow_right</i>
+                  Agregar productos
+            </h4>
+            <button
+                  [disabled]="!listToOrder?.length"
+                  class="waves-effect btn grey darken-1"
+                  (click)="showModal()">
+                  Completar
+            </button>
+      </div>
+
+      <router-outlet></router-outlet>
+
+      <div #modal class="modal modal-fixed-footer">
+            <div class="modal-content">
+                  <h4 class="mb1">Tu pedido</h4>
+                  <table class="highlight">
+                        <thead>
+                              <tr>
+                                    <th>Nombre</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th></th>
+                              </tr>
+                        </thead>
+
+                        <tbody>
+                              <tr
+                                    *ngFor="
+                                          let item of listToOrder;
+                                          trackBy: trackById
+                                    ">
+                                    <td>{{ item.name }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td
+                                          >${{
+                                                (item.cost || 0) *
+                                                      (item.quantity || 0)
+                                          }}</td
+                                    >
+                                    <td
+                                          (click)="
+                                                removePosFromOrder(
+                                                      item._id || ''
+                                                )
+                                          "
+                                          ><i class="material-icons pointer"
+                                                >delete</i
+                                          ></td
+                                    >
+                              </tr>
+                        </tbody>
+                  </table>
+                  <div class="order-summary">
+                        <p
+                              >costo total <strong>{{ allPrice() }} $</strong></p
+                        >
+                  </div>
+            </div>
+            <div class="modal-footer">
+                  <button
+                        [disabled]="pending"
+                        (click)="closeModal()"
+                        class="modal-action waves-effect waves-black btn-flat"
+                        >Cancelas</button
+                  >
+                  <button
+                        [disabled]="!listToOrder?.length || pending"
+                        (click)="submit()"
+                        class="modal-action btn waves-effect"
+                        >Confirmar</button
+                  >
+            </div>
+      </div>
+</main>

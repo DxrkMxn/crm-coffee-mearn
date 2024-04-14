@@ -1,0 +1,68 @@
+version: '3'
+
+networks:
+  crm-network:
+    driver: bridge
+
+services:
+  mongodb:
+    image: mongo:7.0.0
+    container_name: mongodb-crm-coffee
+    networks:
+      - crm-network
+    ports:
+      - 27018:27017
+    volumes:
+      - ./data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: crm-coffee
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend-crm-coffee
+    networks:
+      - crm-network
+    ports:
+      - 5000:5000
+    environment:
+      - HOST=0.0.0.0
+      - PORT=5000
+    depends_on:
+      - mongodb
+    command: "node index.js"
+    restart: always
+
+  react:
+    build:
+      context: ./react_client
+      dockerfile: Dockerfile
+    container_name: react-crm-coffee
+    networks:
+      - crm-network
+    ports:
+      # - 3000:3000 # Sin NGINX
+      - 3000:80 # Con NGINX
+    stdin_open: true
+    tty: true
+    depends_on:
+      - mongodb
+    links:
+      - backend
+    # command: ["npm", "run", "start"] # Sin NGINX
+    command: ["nginx", "-g", "daemon off;"] # Con NGINX
+
+  angular:
+    build:
+      context: ./angular_client
+      dockerfile: Dockerfile
+    container_name: angular-crm-coffee
+    networks:
+      - crm-network
+    ports:
+      - 4200:80
+    depends_on:
+      - mongodb
+    command: ["nginx", "-g", "daemon off;"]
+
